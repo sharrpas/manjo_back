@@ -10,13 +10,26 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Route;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        api: __DIR__.'/../routes/api.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        api: __DIR__ . '/../routes/api.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
+        then: function () {
+            Route::middleware(['api'])
+                ->prefix('api/game_guard')
+                ->name('game_guard')
+                ->group(base_path('routes/gameGuard.php'));
+//
+//            Route::middleware(['api', 'auth:sanctum', 'role:super_admin'])
+//                ->prefix('api/super_admin')
+//                ->name('super_admin')
+//                ->group(base_path('routes/super_admin.php'));
+        }
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
