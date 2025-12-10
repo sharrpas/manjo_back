@@ -44,4 +44,9 @@ class User extends Authenticatable
         return (bool)$this->roles()->where('name', $role)->count();
     }
 
+    public function gameRecords()
+    {
+        return $this->hasMany(GameRecord::class);
+    }
+
 }
