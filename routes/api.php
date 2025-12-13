@@ -8,3 +8,4 @@ use Illuminate\Support\Facades\Route;
 Route::post('send-otp', [OtpController::class,'store']);
 
 Route::post('login',[AuthenticationController::class,'login']);
+Route::post('verify-phone',[AuthenticationController::class,'verifyPhone'])->middleware('auth:sanctum');
