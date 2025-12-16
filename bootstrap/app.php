@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureRequestIsFromLocalhost;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -20,21 +21,17 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware(['api'])
+            Route::middleware(['api', 'localhost'])
                 ->prefix('api/game_guard')
                 ->name('game_guard')
                 ->group(base_path('routes/gameGuard.php'));
-//
-//            Route::middleware(['api', 'auth:sanctum', 'role:super_admin'])
-//                ->prefix('api/super_admin')
-//                ->name('super_admin')
-//                ->group(base_path('routes/super_admin.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'role' => RoleMiddleware::class,
             'custom.throttle' => CustomThrottle::class,
+            'localhost' => EnsureRequestIsFromLocalhost::class,
         ]);
 
         //The rate limiting parameters in your bootstrap/app.php (custom.throttle:50,1) are now overridden by CustomThrottle dynamic logic, so you don't need to change anything else in your configuration.
