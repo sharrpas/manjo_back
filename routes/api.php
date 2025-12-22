@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthenticationController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ScoreboardController;
@@ -15,3 +16,13 @@ Route::post('verify-phone',[AuthenticationController::class,'verifyPhone'])->mid
 Route::get('profile',[UserController::class,'getProfile'])->middleware('auth:sanctum');
 
 Route::get('scoreboard', [ScoreboardController::class, 'index']);
+
+
+Route::post('admin-login',[AdminAuthenticationController::class,'login']);
+
+Route::prefix('admin')->group(function () {
+
+    Route::middleware('auth:sanctum','admin')->group(function () {
+        Route::get('customers',[\App\Http\Controllers\Admin\CustomerController::class,'index']);
+    });
+});
