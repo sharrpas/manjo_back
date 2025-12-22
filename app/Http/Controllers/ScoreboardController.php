@@ -11,11 +11,13 @@ class ScoreboardController extends Controller
 {
     public function index()
     {
-        $bestRecords = GameRecord::query()->where('created_at', '>=', Carbon::now()->subDays(7))
-            ->orderBy('score', 'desc')
-            ->take(10)
+        $bestRecords = GameRecord::query()
+            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->selectRaw('MAX(id) as id, user_id, MAX(score) as score, MAX(created_at) as created_at')
+            ->groupBy('user_id')
+            ->orderByDesc('score')
+            ->limit(10)
             ->with('user:id,username')
-            ->select('id','score','user_id','created_at')
             ->get()
             ->map(function ($record) {
                 return [
