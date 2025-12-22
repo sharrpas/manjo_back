@@ -20,11 +20,11 @@ Route::get('scoreboard', [ScoreboardController::class, 'index']);
 
 
 Route::post('admin-login', [AdminAuthenticationController::class, 'login']);
-
 Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::get('customers', [CustomerController::class, 'index']);
     Route::get('customers/{username}', [CustomerController::class, 'show']);
 
+    Route::get('game-records', [CustomerController::class, 'gameRecords']);
 
 });
