@@ -23,4 +23,11 @@ trait SmsSender
 
         return $text;
     }
+
+    public function sendWelcome()
+    {
+        $text = "به سوخاری مانجو خوش امدید";
+
+        return $text;
+    }
 }

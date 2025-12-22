@@ -7,11 +7,12 @@ use App\Http\Requests\VerifyPhoneRequest;
 use App\Models\User;
 use App\Traits\GeneratesUniqueUidTrait;
 use App\Traits\PhoneValidator;
+use App\Traits\SmsSender;
 use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
-    use GeneratesUniqueUidTrait, PhoneValidator;
+    use GeneratesUniqueUidTrait, PhoneValidator, SmsSender;
 
     public function login()
     {
@@ -50,6 +51,10 @@ class AuthenticationController extends Controller
         }else{
             $user->gameRecords()->update(['user_id' => $cacheUser->id]);
             $cacheUser->delete();
+        }
+
+        if (env('SEND_SMS') == 1) {
+            $this->SMS($this->sendWelcome(), $request->phone);
         }
 
         return $this->success([
