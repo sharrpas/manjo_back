@@ -18,6 +18,7 @@ class GameRecordResource extends JsonResource
             'id' => $this->id,
             'score' => $this->score,
             'created_at' => $this->created_at,
+            'username' => $this->user->username,
         ];
     }
 }

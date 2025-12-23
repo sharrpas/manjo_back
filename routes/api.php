@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAuthenticationController;
+use App\Http\Controllers\Admin\AdminScoreboardController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\OtpController;
@@ -25,6 +26,6 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(functi
     Route::get('customers', [CustomerController::class, 'index']);
     Route::get('customers/{username}', [CustomerController::class, 'show']);
 
-    Route::get('game-records', [CustomerController::class, 'gameRecords']);
+    Route::get('game-records', [AdminScoreboardController::class, 'index']);
 
 });

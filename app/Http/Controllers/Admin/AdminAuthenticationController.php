@@ -21,7 +21,7 @@ class AdminAuthenticationController extends Controller
         }
         $user = User::query()->where('phone', $request->phone)->first();
         if ($user->hasRole('admin')) {
-            $token = $$user->createToken(
+            $token = $user->createToken(
                 name: 'admin_token',
                 expiresAt: now()->addMinutes(config('sanctum.expiration')))
                 ->plainTextToken;
