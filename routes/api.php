@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAuthenticationController;
 use App\Http\Controllers\Admin\AdminScoreboardController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\DirectWebHookController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\ScoreboardController;
 use App\Http\Controllers\UserController;
@@ -29,3 +30,5 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(functi
     Route::get('game-records', [AdminScoreboardController::class, 'index']);
 
 });
+
+Route::post('direct-webhook', [DirectWebHookController::class, 'store']);
