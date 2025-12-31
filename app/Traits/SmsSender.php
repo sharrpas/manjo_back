@@ -30,4 +30,14 @@ trait SmsSender
 
         return $text;
     }
+
+    public function sendToken($url)
+    {
+        $text = "به مانجو سوخاری خوش آمدید." . "\n" .
+            "بازی کن. سوخاری رایگان ببر!" . "\n" .
+            "برای ورود به بازی روی لینک زیر کلیک کنید:" . "\n" .
+            $url;
+
+        return $text;
+    }
 }
